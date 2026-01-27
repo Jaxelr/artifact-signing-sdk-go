@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # Go modules
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "09:00"
+      timezone: "Etc/UTC"
+    commit-message:
+      prefix: "deps"
+    labels:
+      - "dependencies"
