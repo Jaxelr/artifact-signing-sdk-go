@@ -2,7 +2,7 @@
 
 This module provides a Go client library for signing and retrieving relevant signing data using Artifact Signing.
 
-> ![IMPORTANT]
+> [!IMPORTANT]
 > This is not an official Azure SDK. This library is developed and maintained by the community.
 > For dataplane SDKs, there isnt currently an official Azure SDK for Artifact Signing.
 
