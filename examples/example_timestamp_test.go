@@ -8,7 +8,7 @@ import (
 	"github.com/jaxelr/artifact-signing-sdk-go/codesigning"
 )
 
-func Example_TimestampSignature() {
+func ExampleTimestampClient_Timestamp() {
 	// Example signature bytes (in practice, this would be the actual signature from BeginSign)
 	signature := []byte{0x01, 0x02, 0x03, 0x04}
 
