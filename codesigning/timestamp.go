@@ -45,7 +45,7 @@ func NewTimestampClient(tsaURL string, options *TimestampClientOptions) *Timesta
 		tsaURL = DefaultMicrosoftTSAURL
 	}
 
-	httpClient := http.DefaultClient
+	httpClient := &http.Client{Timeout: 10 * time.Second}
 	if options != nil && options.HTTPClient != nil {
 		httpClient = options.HTTPClient
 	}
