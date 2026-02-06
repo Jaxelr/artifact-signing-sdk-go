@@ -35,7 +35,7 @@ type TimestampResult struct {
 // TimestampOptions defines options for requesting a timestamp, such as the hash algorithm to use and whether to request certificates in the response.
 type TimestampOptions struct {
 	Hash crypto.Hash
-	RequestCertificates bool
+	RequestCertificates *bool
 }
 
 // NewTimestampClient creates a new TimestampClient with the specified TSA URL.
@@ -70,8 +70,8 @@ func (c *TimestampClient) Timestamp(ctx context.Context, data []byte, options *T
 			hash = options.Hash
 		}
 
-		if options.RequestCertificates == false {
-			requestCerts = false
+		if options.RequestCertificates != nil {
+			requestCerts = *options.RequestCertificates
 		}
 	}
 
