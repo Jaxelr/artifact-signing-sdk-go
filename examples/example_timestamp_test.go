@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/jaxelr/artifact-signing-sdk-go/codesigning"
 )
 
@@ -17,7 +18,7 @@ func ExampleTimestampClient_Timestamp() {
 
 	ctx := context.Background()
 	result, err := tsClient.Timestamp(ctx, signature, &codesigning.TimestampOptions{
-		RequestCertificates: true,
+		RequestCertificates: to.Ptr(true),
 	})
 	if err != nil {
 		log.Fatalf("failed to timestamp signature: %v", err)
