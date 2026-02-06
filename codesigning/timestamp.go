@@ -69,7 +69,10 @@ func (c *TimestampClient) Timestamp(ctx context.Context, data []byte, options *T
 		if options.Hash != 0 {
 			hash = options.Hash
 		}
-		requestCerts = options.RequestCertificates
+
+		if options.RequestCertificates == false {
+			requestCerts = false
+		}
 	}
 
 	tsReq, err := timestamp.CreateRequest(bytes.NewReader(data), &timestamp.RequestOptions{
