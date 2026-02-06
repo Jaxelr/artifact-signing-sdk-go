@@ -14,21 +14,25 @@ import (
 
 const DefaultMicrosoftTSAURL = "http://timestamp.acs.microsoft.com"
 
+// TimestampClient is a client for requesting RFC 3161 timestamps from a Time Stamping Authority (TSA).
 type TimestampClient struct {
 	tsaURL     string
 	httpClient *http.Client
 }
 
+// TimestampClientOptions defines options for configuring the TimestampClient.
 type TimestampClientOptions struct {
 	HTTPClient *http.Client
 }
 
+// TimestampResult represents the result of a timestamp request, including the timestamp time, serial number, and raw token.
 type TimestampResult struct {
 	Time time.Time
 	SerialNumber string
 	RawToken []byte
 }
 
+// TimestampOptions defines options for requesting a timestamp, such as the hash algorithm to use and whether to request certificates in the response.
 type TimestampOptions struct {
 	Hash crypto.Hash
 	RequestCertificates bool
