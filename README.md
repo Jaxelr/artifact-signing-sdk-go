@@ -3,8 +3,8 @@
 This module provides a Go client library for signing and retrieving relevant signing data using Artifact Signing.
 
 > [!IMPORTANT]
-> This is not an official Azure SDK. This library is developed and maintained by the community.
-> For dataplane SDKs, there isnt currently an official Azure SDK for Artifact Signing.
+> This is not an official Azure SDK. This library was developed by the author and it is maintained by the community.
+> For dataplane SDKs, there isn't currently an official Azure SDK for Artifact Signing in Go.
 
 ## Installation
 
@@ -13,9 +13,6 @@ go get github.com/jaxelr/artifact-signing-sdk-go/codesigning
 ```
 
 ## Usage
-
-> [!NOTE]
-> This example is missing timestamping for simplicity. In production scenarios, it is recommended to include timestamping when signing artifacts, since these are short lived keys.
 
 ```go
 package main
@@ -75,20 +72,32 @@ func main() {
 	}
 
 	fmt.Printf("Signing operation completed. Signature length: %d bytes\n", len(resp.Signature))
+
+	// Timestamp the signature using Microsoft's TSA (recommended for production)
+	tsClient := codesigning.NewTimestampClient("", nil) // Uses DefaultMicrosoftTSAURL
+	tsResult, err := tsClient.Timestamp(ctx, resp.Signature, &codesigning.TimestampOptions{
+		RequestCertificates: true,
+	})
+	if err != nil {
+		log.Fatalf("failed to timestamp signature: %v", err)
+	}
+
+	fmt.Printf("Signature timestamped at: %s\n", tsResult.Time)
 }
 ```
 
 ## Features
 
 - **Sign artifacts** - Sign digests using Artifact Signing
+- **Timestamp signatures** - Request RFC 3161 timestamps for signatures using a TSA
 - **Get certificate chain** - Retrieves the full certificate chain for a signing profile
 - **Get root certificate** - Retrieves the root certificate
 - **Get EKU** - Retrieve Extended Key Usage values for a profile
 
 ## Requirements
 
-- Go 1.23 or later
-- Azure subscription with Artifact Signing resource
+- Go 1.24 or later
+- Azure subscription with an Artifact Signing resource
 
 ## References
 
