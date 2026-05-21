@@ -7,6 +7,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"io"
+	"os"
 	"testing"
 	"time"
 
@@ -15,10 +16,10 @@ import (
 	"github.com/jaxelr/artifact-signing-sdk-go/codesigning"
 )
 
-const (
-	testEndpoint    = "https://eus.codesigning.azure.net"
-	testAccountName = "jaxelr"
-	testProfileName = "jaxelr-pt"
+var (
+	testEndpoint    = os.Getenv("ARTIFACT_SIGNING_ENDPOINT")
+	testAccountName = os.Getenv("ARTIFACT_SIGNING_ACCOUNT")
+	testProfileName = os.Getenv("ARTIFACT_SIGNING_PROFILE")
 )
 
 func TestGetSignCertificateChain(t *testing.T) {
@@ -143,7 +144,7 @@ func TestSignAndTimestamp(t *testing.T) {
 	t.Logf("Signing completed with status: %s", *result.Status)
 	t.Logf("Signature length: %d bytes", len(result.Signature))
 
-	// Step 2: Timestamp the signature 
+	// Step 2: Timestamp the signature
 	tsClient := codesigning.NewTimestampClient("", nil) // Uses DefaultMicrosoftTSAURL
 
 	tsResult, err := tsClient.Timestamp(ctx, result.Signature, &codesigning.TimestampOptions{
