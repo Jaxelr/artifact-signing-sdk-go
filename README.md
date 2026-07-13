@@ -96,7 +96,7 @@ func main() {
 
 ## Requirements
 
-- Go 1.24 or later
+- Go 1.25 or later
 - Azure subscription with an Artifact Signing resource
 
 ## References
